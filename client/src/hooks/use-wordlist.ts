@@ -2,11 +2,21 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@shared/routes";
 import type { GenerateWordlistRequest, WordlistResponse } from "@shared/schema";
 
+/**
+ * Base API URL
+ * - Local dev  → http://localhost:5000
+ * - Production → Render backend
+ */
+const API_BASE =
+  import.meta.env.PROD
+    ? "https://xtract-fldn.onrender.com"
+    : "http://localhost:5000";
+
 async function fetchJSON<T>(
   path: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const res = await fetch(path, {
+  const res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -23,16 +33,15 @@ async function fetchJSON<T>(
   return res.json();
 }
 
-/* GET history */
+/* GET /api/history */
 export function useHistory() {
   return useQuery({
     queryKey: ["wordlist-history"],
-    queryFn: () =>
-      fetchJSON(api.wordlist.history.path),
+    queryFn: () => fetchJSON(api.wordlist.history.path),
   });
 }
 
-/* POST generate */
+/* POST /api/generate */
 export function useGenerateWordlist() {
   const queryClient = useQueryClient();
 
