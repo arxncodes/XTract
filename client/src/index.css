@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oxanium:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Oxanium', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  /* Cyber/Hacker Green Theme */
+  --background: 224 71% 4%;
+  --foreground: 210 40% 98%;
+
+  --card: 224 71% 4%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 224 71% 4%;
+  --popover-foreground: 210 40% 98%;
+
+  /* Matrix Green Accent */
+  --primary: 142 70% 50%;
+  --primary-foreground: 144 65% 5%;
+
+  --secondary: 217 19% 27%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217 19% 27%;
+  --muted-foreground: 215 20% 65%;
+
+  --accent: 142 70% 50%;
+  --accent-foreground: 144 65% 5%;
+
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 217 19% 27%;
+  --input: 217 19% 27%;
+  --ring: 142 70% 50%;
+
+  --radius: 0.25rem;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    background-image: 
+      radial-gradient(circle at 50% 0%, hsla(142, 70%, 50%, 0.1) 0%, transparent 50%),
+      linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 100% 100%, 20px 20px, 20px 20px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply tracking-tight uppercase;
+  }
+
+  /* Custom Scrollbar for Terminals */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-background border-l border-border;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/20 border border-primary/40 rounded-none hover:bg-primary/40 transition-colors;
+  }
+}
+
+@layer components {
+  .cyber-card {
+    @apply bg-card border border-border/50 relative overflow-hidden;
+    box-shadow: 0 0 20px -10px rgba(0, 255, 100, 0.1);
+  }
+  
+  .cyber-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary opacity-50;
+  }
+  
+  .cyber-card::after {
+    content: '';
+    @apply absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary opacity-50;
+  }
+
+  .cyber-input {
+    @apply bg-background/50 border-border focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all font-mono text-sm;
+  }
+
+  .cyber-button {
+    @apply bg-primary/10 hover:bg-primary/20 text-primary border border-primary/50 hover:border-primary hover:shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-all uppercase tracking-widest font-bold text-xs py-3;
+  }
+
+  .glitch-text {
+    position: relative;
+  }
+  
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+  }
+  
+  .terminal-text {
+    @apply font-mono text-green-500;
+    text-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+  }
+}
